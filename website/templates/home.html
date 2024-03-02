@@ -2,16 +2,51 @@
 
 {% if user.is_authenticated %}
 
-<h1>Welcome!</h1>
+<h1>Records...</h1>
+<br/>
+{% if records %}
+<div class="table-responsive">
+  <table class="table table-hover  table-striped table-bordered">
+      <thead class="table-dark text-center">
+        <tr>
+          <th scope="col" class="align-middle">Name</th>
+          <th scope="col" class="align-middle">Email</th>
+          <th scope="col" class="align-middle">Phone</th>
+          <th scope="col" class="align-middle">Address</th>
+          <th scope="col" class="align-middle">City</th>
+          <th scope="col" class="align-middle">State</th>
+          <th scope="col" class="align-middle">Zip Code</th>
+          <th scope="col" class="align-middle">Created At</th>
+          <th scope="col" class="align-middle">Cara</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        {% for record in records %}
+        <tr>
+          <td scope="row">{{ record }}</td>
+          <td>{{ record.email }}</td>
+          <td>{{ record.phone }}</td>
+          <td>{{ record.address }}</td>
+          <td>{{ record.city }}</td>
+          <td>{{ record.state }}</td>
+          <td>{{ record.zip_code }}</td>
+          <td>{{ record.created_at }}</td>
+          <td class="text-center"><a href="{% url 'record' record.id %}" class="bg-black text-white p-1 rounded px-2">Edit</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+  </table>
+</div>
 
-{%else%}
+{% endif %}
+
+{% else %}
 
 <div class="col-md-6 offset-md-3">
   <h1>Login</h1>
   <br/>
   <form method="POST" action="{% url 'home' %}">
     {% csrf_token %}
-    <form>
       <div class="mb-3">
         <input
             type="text"
@@ -32,7 +67,6 @@
       </div>
       <br/>
       <button type="submit" class="btn btn-secondary">Login</button>
-    </form>
   </form>
 </div>
 
