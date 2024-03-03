@@ -81,3 +81,20 @@ def add_record(request):
             messages.success(request, 'You Must Be an Admin to Add a Record...')
             return redirect('home')
     return redirect('home')
+
+def update_record(request, pk):
+    if request.user.is_authenticated:
+        current_record = Record.objects.get(id=pk)
+        if request.user.is_superuser:
+            form = AddRecordForm(request.POST or None, instance=current_record)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Record has been updated...')
+                return redirect('home')
+            return render(request, 'update_record.html', {'form': form})
+        else:
+            messages.success(request, 'You Must Be an Admin to Update a Record...')
+            return redirect('home')
+    else:
+        messages.success(request, 'You Must Be Log in to Update a Record...')
+        return redirect('home')

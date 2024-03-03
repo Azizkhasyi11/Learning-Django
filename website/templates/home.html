@@ -37,7 +37,7 @@
           <td>{{ record.zip_code }}</td>
           <td>{{ record.created_at }}</td>
           {% if user.is_superuser or user.is_staff %}
-          <td class="text-center"><a href="{% url 'record' record.id %}" class="bg-black text-white btn">Edit</a></td>
+          <td class="text-center"><a href="{% url 'record' record.id %}" class="bg-black text-white btn">See</a></td>
           <td class="text-center"><a href="{% url 'delete_record' record.id %}" class="btn-danger btn" onclick="return confirm('Are you sure?')">Delete</a></td>
           {% endif %}
         </tr>
