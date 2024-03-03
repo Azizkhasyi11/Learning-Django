@@ -1,13 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .forms import SignUpForm
+from .forms import SignUpForm, AddRecordForm
 from .models import Record
 
 # Create your views here.
 def home(request):
     records = Record.objects.all()
-    
     
     # Check is logging in
     if request.method == 'POST':
@@ -55,3 +54,30 @@ def costumer_record(request, pk):
     else:
         messages.success(request, 'You must be logged in to view that page...')
         return redirect('home')
+    
+    
+def delete_record(request, pk):
+    if request.user.is_authenticated:
+        if request.user.is_superuser:
+            delete_it = Record.objects.get(id=pk)
+            delete_it.delete()
+            messages.success(request, 'Record has been deleted...')
+            return redirect('home')
+    else:
+        messages.success(request, 'You Must Log In to Delete a Record...')
+        return redirect('home')
+    
+def add_record(request):
+    form = AddRecordForm(request.POST or None)
+    if request.user.is_authenticated:
+        if request.user.is_superuser:
+            if request.method == 'POST':
+                if form.is_valid():
+                    add_record = form.save()
+                    messages.success(request, 'Record has been added...')
+                    return redirect('home')
+            return render(request, 'add_record.html', {'form': form})
+        else:
+            messages.success(request, 'You Must Be an Admin to Add a Record...')
+            return redirect('home')
+    return redirect('home')

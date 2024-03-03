@@ -2,13 +2,17 @@
 
 {% if user.is_authenticated %}
 
-<h1>Records...</h1>
+<h1>All Records</h1>
+  {% if user.is_authenticated %}
+    <span class="text-muted link-underline">Currently login as {{ user.username }} <i>{% if user.is_superuser or user.is_staff %}(Staff){% else %}(User){% endif %}</i></span>
+  {% endif %}
 <br/>
 {% if records %}
 <div class="table-responsive">
   <table class="table table-hover  table-striped table-bordered">
       <thead class="table-dark text-center">
         <tr>
+          <th scope="col" class="align-middle">ID</th>
           <th scope="col" class="align-middle">Name</th>
           <th scope="col" class="align-middle">Email</th>
           <th scope="col" class="align-middle">Phone</th>
@@ -17,13 +21,14 @@
           <th scope="col" class="align-middle">State</th>
           <th scope="col" class="align-middle">Zip Code</th>
           <th scope="col" class="align-middle">Created At</th>
-          <th scope="col" class="align-middle">Cara</th>
+          {% if user.is_superuser or user.is_staff %}<th scope="col"  colspan="2" class="align-middle">Action</th>{% endif %}
         </tr>
       </thead>
       <tbody class="table-group-divider">
         {% for record in records %}
         <tr>
-          <td scope="row">{{ record }}</td>
+          <td class="align-middle text-center">{{ record.id }}</td>
+          <td>{{ record }}</td>
           <td>{{ record.email }}</td>
           <td>{{ record.phone }}</td>
           <td>{{ record.address }}</td>
@@ -31,7 +36,10 @@
           <td>{{ record.state }}</td>
           <td>{{ record.zip_code }}</td>
           <td>{{ record.created_at }}</td>
-          <td class="text-center"><a href="{% url 'record' record.id %}" class="bg-black text-white p-1 rounded px-2">Edit</a></td>
+          {% if user.is_superuser or user.is_staff %}
+          <td class="text-center"><a href="{% url 'record' record.id %}" class="bg-black text-white btn">Edit</a></td>
+          <td class="text-center"><a href="{% url 'delete_record' record.id %}" class="btn-danger btn" onclick="return confirm('Are you sure?')">Delete</a></td>
+          {% endif %}
         </tr>
         {% endfor %}
       </tbody>

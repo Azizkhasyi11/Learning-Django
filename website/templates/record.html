@@ -5,37 +5,37 @@
 <div class="table-responsive-sm">
     <table class="table table-hover  table-striped table-bordered">
             <tr>
-                <th>Email</th>
-                <td>{{ costumer_record.email }}</td>
+                <th colspan="1">Email</th>
+                <td colspan="2">{{ costumer_record.email }}</td>
             </tr>
             <tr>
-                <th>Phone</th>
-                <td>{{ costumer_record.phone }}</td>
+                <th colspan="1">Phone</th>
+                <td colspan="2">{{ costumer_record.phone }}</td>
             </tr>
             <tr>
-                <th>Address</th>
-                <td>{{ costumer_record.address }}</td>
+                <th colspan="1">Address</th>
+                <td colspan="2">{{ costumer_record.address }}</td>
             </tr>
             <tr>
-                <th>City</th>
-                <td>{{ costumer_record.city }}</td>
+                <th colspan="1">City</th>
+                <td colspan="2">{{ costumer_record.city }}</td>
             </tr>
             <tr>
-                <th>State</th>
-                <td>{{ costumer_record.state }}</td>
+                <th colspan="1">State</th>
+                <td colspan="2">{{ costumer_record.state }}</td>
             </tr>
             <tr>
-                <th>Zip Code</th>
-                <td>{{ costumer_record.zip_code }}</td>
+                <th colspan="1">Zip Code</th>
+                <td colspan="2">{{ costumer_record.zip_code }}</td>
             </tr>
             <tr>
-                <th>Created at</th>
-                <td>{{ costumer_record.created_at }}</td>
+                <th colspan="1">Created at</th>
+                <td colspan="2">{{ costumer_record.created_at }}</td>
             </tr>
     </table>
 </div>
 <br/><br/>
 <a href="{% url 'home' %}" class="btn btn-secondary text-white text-decoration-none">Back</a>
-<a href="{% url 'home' %}" class="btn btn-danger text-white text-decoration-none">Delete</a>
+<a href="{% url 'delete_record' costumer_record.id %}" class="btn btn-danger text-white text-decoration-none">Delete</a>
 
 {% endblock %}
